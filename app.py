@@ -1,15 +1,17 @@
 # app.py
+import os
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
+from dotenv import load_dotenv
 
 
-
+load_dotenv()
 app = Flask(__name__)
-
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'testpw'
-app.config['MYSQL_DB'] = 'flask'
+os.environ.get("TOKEN_NAME","")
+app.config['MYSQL_HOST'] = os.environ.get("MYSQL_HOST","localhost")
+app.config['MYSQL_USER'] = os.environ.get("MYSQL_USER","root") 
+app.config['MYSQL_PASSWORD'] = os.environ.get("MYSQL_PASSWORD","") 
+app.config['MYSQL_DB'] =  os.environ.get("MYSQL_DB","rent_cars") 
 
 mysql = MySQL(app)
 
