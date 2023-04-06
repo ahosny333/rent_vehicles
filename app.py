@@ -26,7 +26,7 @@ def get_customers():
     try:
         if request.method == 'GET':
             cursor = mysql.connection.cursor()
-            cursor.execute('SELECT * FROM customer ')
+            cursor.execute('SELECT * FROM customers ')
             customer = cursor.fetchall()
             return jsonify(customer),200
     except Exception as e:
@@ -39,7 +39,7 @@ def get_customers():
 def get_customer(id):
     try:
         cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM customer WHERE custID=%s',id)
+        cursor.execute('SELECT * FROM customers WHERE custID=%s',id)
         customer = cursor.fetchone()
         return jsonify(customer),200
     except Exception as e:
@@ -85,14 +85,15 @@ def update_customer(id):
         driving_licence = request_params['driving_licence']
         if fname and lname and contact_no and driving_licence:
             sql = "UPDATE customers SET first_name = %s,last_name = %s,contact_no=%s,driving_licence=%s WHERE custID= %s"
-            data = (fname,lname,contact_no,driving_licence)
+            data = (fname,lname,contact_no,driving_licence,id)
             cursor = mysql.connection.cursor()
             cursor.execute(sql,data)
             mysql.connection.commit()
             return jsonify(data),200
         else:
             return not_found()
-    except:
+    except Exception as e:
+        print(e)
         return not_found()
     finally:
         cursor.close()
