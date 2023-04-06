@@ -1,0 +1,36 @@
+CREATE TABLE cars (
+    carID INT AUTO_INCREMENT PRIMARY KEY,
+    model VARCHAR(50) NOT NULL,
+    car_no VARCHAR(50) NOT NULL,
+    status BOOL NOT NULL,
+    rent_price DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE customers (
+    custID INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) ,
+    contact_no VARCHAR(50) NOT NULL,
+    driving_licence VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE employee (
+    empID INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    address VARCHAR(50) ,
+    salary DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE ren_order(
+    rentID INT AUTO_INCREMENT PRIMARY KEY,
+    rent_date DATE NOT NULL,
+    pickup_date DATE NOT NULL,
+    rent_period  INT CHECK (rent_period BETWEEN 1 and 7);
+    carID INT NOT NULL,
+    custID INT NOT NULL,
+    empID INT NOT NULL,
+    FOREIGN KEY (carID) REFERENCES cars(carID),
+    FOREIGN KEY (custID) REFERENCES customers(custID),
+    FOREIGN KEY (empID) REFERENCES employee(empID)
+);
+
